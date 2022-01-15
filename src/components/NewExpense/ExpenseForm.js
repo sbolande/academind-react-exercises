@@ -6,18 +6,12 @@ const ExpenseForm = (props) => {
     const [enteredTitle, setEnteredTitle] = useState('');
     const [enteredAmount, setEnteredAmount] = useState('');
     const [enteredDate, setEnteredDate] = useState('');
+    const [enteredDetails, setEnteredDetails] = useState('');
 
-    const titleChangeHandler = (event) => {
-        setEnteredTitle(event.target.value);
-    };
-
-    const amountChangeHandler = (event) => {
-        setEnteredAmount(event.target.value);
-    };
-
-    const dateChangeHandler = (event) => {
-        setEnteredDate(event.target.value);
-    };
+    const titleChangeHandler = (event) => { setEnteredTitle(event.target.value); };
+    const amountChangeHandler = (event) => { setEnteredAmount(event.target.value); };
+    const dateChangeHandler = (event) => { setEnteredDate(event.target.value); };
+    const detailsChangeHandler = (event) => { setEnteredDetails(event.target.value); };
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -25,13 +19,15 @@ const ExpenseForm = (props) => {
         const expenseData = {
             title: enteredTitle,
             amount: enteredAmount,
-            date: new Date(enteredDate)
+            date: new Date(enteredDate),
+            details: enteredDetails
         };
 
         props.onSaveExpenseData(expenseData);
         setEnteredTitle('');
         setEnteredAmount('');
         setEnteredDate('');
+        setEnteredDetails('');
     };
 
     return (
@@ -63,6 +59,14 @@ const ExpenseForm = (props) => {
                         max='2022-12-31'
                         value={enteredDate}
                         onChange={dateChangeHandler}
+                    />
+                </div>
+                <div className='new-expense__control'>
+                    <label>Description</label>
+                    <input
+                        type='text'
+                        value={enteredDetails}
+                        onChange={detailsChangeHandler}
                     />
                 </div>
             </div>
