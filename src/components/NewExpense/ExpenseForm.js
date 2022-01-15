@@ -1,4 +1,3 @@
-import { props } from 'bluebird';
 import React, { useState } from 'react';
 
 import './ExpenseForm.css';
