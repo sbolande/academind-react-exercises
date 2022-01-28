@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -11,28 +11,31 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  const isEmailValid = (email) => email.includes('@') && email.includes('.');
+  const isPasswordValid = (password) => password.trim().length > 6;
+
+  useEffect(() => {
+    setFormIsValid(isEmailValid(enteredEmail) && isPasswordValid(enteredPassword));
+  }, [enteredEmail, enteredPassword]);
+
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
 
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
+    setFormIsValid(isEmailValid(event.target.value) && isPasswordValid(enteredPassword));
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
 
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
+    setFormIsValid(isPasswordValid(event.target.value) && isEmailValid(enteredEmail));
   };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    setEmailIsValid(isEmailValid(enteredEmail));
   };
 
   const validatePasswordHandler = () => {
-    setPasswordIsValid(enteredPassword.trim().length > 6);
+    setPasswordIsValid(isPasswordValid(enteredPassword));
   };
 
   const submitHandler = (event) => {
