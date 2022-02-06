@@ -14,18 +14,22 @@ function App() {
     setError(null);
 
     try {
-      const res = await fetch('https://swapi.dev/api/films/');
+      const res = await fetch('https://react-http-6b4a6.firebaseio.com/movies.json');
       if (!res.ok) throw new Error('Something went wrong!');
       const data = await res.json();
-      const transformedMovies = data.results.map(movieData => {
-        return {
-          id: movieData.episode_id,
-          title: movieData.title,
-          openingText: movieData.opening_crawl,
-          releaseDate: movieData.release_date,
-        };
-      });
-      setMovies(transformedMovies);
+      
+      const loadedMovies = [];
+
+      for (const key in data) {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          openingText: data[key].openingText,
+          releaseDate: data[key].releaseDate,
+        });
+      }
+
+      setMovies(loadedMovies);
     } catch (err) {
       setError(err.message);
     }
