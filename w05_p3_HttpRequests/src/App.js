@@ -36,7 +36,17 @@ function App() {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
 
-  const addMovieHandler = movie => { console.log(movie); };
+  const addMovieHandler = movie => {
+    const res = await fetch('https://react-http-6b4a6.firebaseio.com/movies.json', {
+      method: 'POST',
+      body: JSON.stringify(movie),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await res.json();
+    console.log(data);
+  };
 
   let content = <p>Found no movies.</p>;
 
